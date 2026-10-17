@@ -18,14 +18,25 @@
 
 ---
 
-## 📖 About Pip (Character Sheet - Track 1)
+### 3. Story Behind Your Build
+I created Pip because I've always loved that cozy, dreamy feeling right before falling asleep. Inspired by the early web - sparkles, guestbooks, and hit counters - I imagined Pip as a Junior Dream Engineer who delivers dreams to children. My proudest features are the Lullaby Lab, where chimes play using the Web Audio API, and the Dream Delivery Routes, where Pip moves in perfect sync along an SVG path using `getPointAtLength()`.
 
-* **Name:** Pip
-* **Role:** Junior Dream Engineer @ The Midnight Nursery
-* **What they are:** Starry-eared baby dream engineer with moon-goggles and a glowing cloud. Hatched from a floating stardust cocoon.
-* **What they do:** Crafts chime lullabies, hand-pours nightlight lanterns, navigates rooftop dream delivery routes.
-* **Story:** Too tiny for day jobs but perfect for night shift. Works 2:17 AM to ensure every little dreamer sleeps peacefully.
-* **Tagline:** *“Soft tunes for deep, starlit naps.”*
+### 4. 📖 Character Sheet (Track 1 - Original Character)
+- **Name:** Pip
+- **Role:** Junior Dream Engineer, The Midnight Nursery
+- **Personality:** Soft-spoken, sleepy, curious, loves to hum lullabies
+- **What they do:** Delivers dreams across 4 dream sectors and lights the way with a lantern
+- **Quirk:** After every delivery, Pip winks and dozes off for a second
+- **Tagline:** *“Soft tunes for deep, starlit naps.”*
+
+### 5. Credits
+- **Art:** Pip illustrations - Hand-drawn + AI-assisted, edited by Sraveena
+- **Audio:** Lullaby chimes - Web Audio API (Vanilla JS), no external library
+- **Fonts:** VT323 & Fredoka from Google Fonts
+- **Code:** HTML5, CSS3, Vanilla JS - built during haX.baby sprint 17-19 Oct 2026
+- **Inspiration:** Early web / dreamcore / 90s personal sites
+
+
 
 > Pip is © haX.baby (Original character by organizers) — Fan-made interactive portfolio.
 
