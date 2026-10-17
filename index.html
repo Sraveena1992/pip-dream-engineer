@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pip's Midnight Nursery | Dream Engineer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=VT323&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="night-mode">
+
+    <canvas id="starfieldCanvas"></canvas>
+    <canvas id="sparkleCanvas"></canvas>
+
+    <nav class="hud-nav">
+        <div class="hud-badge"><span class="pulse-dot"></span> LIVE NURSERY DISPATCH</div>
+        <div class="hud-controls">
+            <button id="chaosBtn" class="hud-btn">✨ Chaos Mode</button>
+            <button id="muteBtn" class="hud-btn">🔊 Audio: ON</button>
+        </div>
+    </nav>
+
+    <main class="nursery-wrapper">
+
+        <header class="hero-card glass-panel">
+            <div class="character-viewport">
+                <img src="pip_avatar_cloud.png" alt="Pip on Cloud" class="pip-hero-img">
+            </div>
+
+            <h1 class="glow-title">Pip</h1>
+            <p class="role-badge">Junior Dream Engineer @ The Midnight Nursery</p>
+            <p class="tagline">“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways.”</p>
+
+            <div class="hero-actions">
+                <button id="aboutBtn" class="primary-btn">📖 Open Character Sheet</button>
+                <button id="moodBtn" class="secondary-btn">🌙 Toggle Day/Night</button>
+            </div>
+        </header>
+
+        <section class="odometer-bar glass-panel">
+            <div class="stat-item">
+                <span class="stat-label">Dreams Delivered</span>
+                <span id="odometer" class="stat-value">01,204</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Nursery Mood</span>
+                <span id="moodLabel" class="stat-value">Cozy Midnight</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Active Route</span>
+                <span class="stat-value">Sector B: Attic Lofts</span>
+            </div>
+        </section>
+
+        <section class="section-container">
+            <h2 class="section-heading"><span>01</span> The Dream Workshop</h2>
+
+            <div class="works-grid">
+                <div class="work-card glass-panel">
+                    <div class="card-media">
+                        <img src="pip_lullaby_box.png" alt="Lullaby Music Box" class="project-thumb">
+                    </div>
+                    <div class="card-header">
+                        <h3>The Lullaby Lab</h3>
+                    </div>
+                    <p>Interactive Web Audio API chime synthesizer. Click sound pads below to sequence peaceful sleep frequencies.</p>
+                    
+                    <div class="synth-pads">
+                        <button class="synth-pad" data-note="261.63">C4</button>
+                        <button class="synth-pad" data-note="329.63">E4</button>
+                        <button class="synth-pad" data-note="392.00">G4</button>
+                        <button class="synth-pad" data-note="523.25">C5</button>
+                    </div>
+
+                    <button class="action-btn" id="playFullLullaby">✨ Play Auto Lullaby</button>
+                </div>
+
+                <div class="work-card glass-panel">
+                    <div class="card-media lantern-media-box" id="lanternMediaBox">
+                        <img src="pip_dream_lantern.png" alt="Dream Lantern" class="project-thumb" id="lanternImg">
+                    </div>
+                    <div class="card-header">
+                        <h3>Nightlight Collection</h3>
+                    </div>
+                    <p>Hand-poured bedside lanterns. Adjust hue intensity to eliminate scary shadows in bedroom corners.</p>
+                    
+                    <div class="lantern-controls">
+                        <input type="range" id="glowSlider" min="20" max="100" value="80">
+                    </div>
+
+                    <button class="action-btn" id="cycleLanternColor">🎨 Switch Lantern Color</button>
+                </div>
+
+                <div class="work-card glass-panel">
+                    <div class="card-media">
+                        <img src="pip_portrait.png" alt="Pip Portrait" class="project-thumb">
+                    </div>
+                    <div class="card-header">
+                        <h3>Dream Delivery Routes</h3>
+                    </div>
+                    <p>Real-time rooftop navigation vector route syncs delivery progress across residential quarters.</p>
+
+                    <div class="map-container">
+                        <svg viewBox="0 0 250 100" class="route-svg">
+                            <path d="M 20 50 Q 85 10 125 50 T 230 50" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,6" id="routePath"/>
+                            <circle cx="20" cy="50" r="6" fill="#f43f5e"/>
+                            <circle cx="125" cy="50" r="6" fill="#fbbf24"/>
+                            <circle cx="230" cy="50" r="6" fill="#34d399"/>
+                            <circle id="deliverySprite" cx="20" cy="50" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
+                        </svg>
+                    </div>
+
+                    <button class="action-btn" id="dispatchRouteBtn">🚀 Dispatch Delivery</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-container">
+            <h2 class="section-heading"><span>02</span> Pip's Journey</h2>
+            <div class="story-box glass-panel">
+                <div class="story-content">
+                    <p>Hatched from a floating stardust cocoon on a quiet midnight, Pip joined the Midnight Nursery to eliminate night terrors. Equipped with custom-tuned music boxes and soft warm lanterns, Pip glides across rooftops ensuring every little dreamer rests peacefully.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-container text-center">
+            <div class="easter-egg-box glass-panel" id="secretEggBox">
+                <span class="egg-icon" id="eggIcon">💤</span>
+                <p id="eggText">Pip is currently taking a power nap. Tap softly to wake them up!</p>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal-backdrop" id="characterModal">
+        <div class="modal-window glass-panel">
+            <button class="modal-close" id="closeModal">&times;</button>
+            <div class="modal-header">
+                <h2>Pip's Character Sheet</h2>
+                <p>Track 2: Original Character Profile</p>
+            </div>
+            <div class="modal-body">
+                <div class="sheet-row"><span class="sheet-key">1. Name</span><span class="sheet-val">Pip</span></div>
+                <div class="sheet-row"><span class="sheet-key">2. What they are</span><span class="sheet-val">Starry-eared Dream Engineer with moon-goggles and a pastel aura.</span></div>
+                <div class="sheet-row"><span class="sheet-key">3. What they do</span><span class="sheet-val">Crafts chime lullabies, hand-pours nightlights, and navigates rooftop routes.</span></div>
+                <div class="sheet-row"><span class="sheet-key">4. Their story</span><span class="sheet-val">Hatched from a stardust cocoon to protect bedrooms from darkness.</span></div>
+                <div class="sheet-row"><span class="sheet-key">5. Tagline</span><span class="sheet-val">“Soft tunes for deep, starlit naps.”</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
