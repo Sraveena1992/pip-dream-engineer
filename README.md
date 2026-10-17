@@ -18,10 +18,10 @@
 
 ---
 
-### 3. Story Behind Your Build
+###  📖 Story Behind Your Build
 I created Pip because I've always loved that cozy, dreamy feeling right before falling asleep. Inspired by the early web - sparkles, guestbooks, and hit counters - I imagined Pip as a Junior Dream Engineer who delivers dreams to children. My proudest features are the Lullaby Lab, where chimes play using the Web Audio API, and the Dream Delivery Routes, where Pip moves in perfect sync along an SVG path using `getPointAtLength()`.
 
-### 4. 📖 Character Sheet (Track 1 - Original Character)
+###  🧸 Character Sheet (Track 1 - Original Character)
 - **Name:** Pip
 - **Role:** Junior Dream Engineer, The Midnight Nursery
 - **Personality:** Soft-spoken, sleepy, curious, loves to hum lullabies
@@ -29,7 +29,7 @@ I created Pip because I've always loved that cozy, dreamy feeling right before f
 - **Quirk:** After every delivery, Pip winks and dozes off for a second
 - **Tagline:** *“Soft tunes for deep, starlit naps.”*
 
-### 5. Credits
+###  ✨ Credits
 - **Art:** Pip illustrations - Hand-drawn + AI-assisted, edited by Sraveena
 - **Audio:** Lullaby chimes - Web Audio API (Vanilla JS), no external library
 - **Fonts:** VT323 & Fredoka from Google Fonts
