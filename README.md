@@ -8,7 +8,7 @@
 
   [![haX.baby Hackathon](https://img.shields.io/badge/haX.baby-Track%201%20Original%20Character-A23B5A?style=for-the-badge)](https://hax.baby)
   [![Stack](https://img.shields.io/badge/Stack-HTML5%20|%20CSS3%20|%20Vanilla%20JS-38bdf8?style=for-the-badge)](#-tech-stack)
-  [![Live Demo](https://img.shields.io/badge/Live-GitHub%20Pages-34d399?style=for-the-badge)](https://sraveena1992.github.io/pip-dream-engineer/)
+  [![Live Demo](https://img.shields.io/badge/Live-GitHub%20Pages-34d399?style=for-the-badge)](https://pip-dream-engineer.onrender.com/)
 
   **Built for haX.baby 2026 • 48hr Sprint • 17-19 Oct 2026 • Early Web Soul + Dreamcore Aesthetic**
 
@@ -94,7 +94,7 @@
   npx serve .
 
 🔗 Links
-* **Live Demo**: https://sraveena1992.github.io/pip-dream-engineer/
+* **Live Demo**: https://pip-dream-engineer.onrender.com/
 * **Repo: https**://github.com/Sraveena1992/pip-dream-engineer
 * **Commit History**: Public from 17 Oct 2026 (Meets time-capsule requirement)
 
