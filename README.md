@@ -7,7 +7,7 @@
   ### 🌟 *“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways.”*
 
 <p align="center">
-<a href="https://pip-dream-engineer.onrender.com/"><img src="./live-glow.png" height="42" /></a>
+<a href="https://pip-dream-engineer.onrender.com/"><img src="https://img.shields.io/badge/✨_LIVE-GitHub_Pages-00E5A0?style=for-the-badge&logo=github&logoColor=white&labelColor=00B87A" /></a>
 <img src="https://img.shields.io/badge/TRACK_1-ORIGINAL_CHARACTER-c4b5fd?style=for-the-badge&labelColor=3c324d" />
 <img src="https://img.shields.io/badge/STACK-HTML5_%7C_CSS3_%7C_Vanilla_JS-fde68a?style=for-the-badge&labelColor=4a3f2a" />
 </p>
