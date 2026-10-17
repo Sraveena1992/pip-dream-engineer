@@ -9,11 +9,13 @@
 </head>
 <body class="night-mode">
 
+    <div class="progress-bar" style="position:fixed;top:0;left:0;height:4px;background:#ff8fa3;z-index:999;width:0%;transition:.1s"></div>
+
     <canvas id="starfieldCanvas"></canvas>
     <canvas id="sparkleCanvas"></canvas>
 
     <nav class="hud-nav">
-        <div class="hud-badge"><span class="pulse-dot"></span> LIVE NURSERY DISPATCH</div>
+        <div class="hud-badge"><span class="pulse-dot"></span> LIVE NURSERY DISPATCH — PIP ON DUTY</div>
         <div class="hud-controls">
             <button id="chaosBtn" class="hud-btn">✨ Chaos Mode</button>
             <button id="muteBtn" class="hud-btn">🔊 Audio: ON</button>
@@ -23,13 +25,14 @@
     <main class="nursery-wrapper">
 
         <header class="hero-card glass-panel">
-            <div class="character-viewport">
-                <img src="pip_avatar_cloud.png" alt="Pip on Cloud" class="pip-hero-img">
+            <div class="character-viewport" title="Click me 5x for secret!">
+                <img src="pip_avatar_cloud.png" alt="Pip on Cloud" class="pip-hero-img" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
+                <div class="floating-eyes" style="display:none">👀</div>
             </div>
 
             <h1 class="glow-title">Pip</h1>
             <p class="role-badge">Junior Dream Engineer @ The Midnight Nursery</p>
-            <p class="tagline">“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways.”</p>
+            <p class="tagline">“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways. — Built with sparkles, chimes & chaos.”</p>
 
             <div class="hero-actions">
                 <button id="aboutBtn" class="primary-btn">📖 Open Character Sheet</button>
@@ -48,7 +51,7 @@
             </div>
             <div class="stat-item">
                 <span class="stat-label">Active Route</span>
-                <span class="stat-value">Sector B: Attic Lofts</span>
+                <span class="stat-value" id="routeLabel">Sector B: Attic Lofts</span>
             </div>
         </section>
 
@@ -58,12 +61,13 @@
             <div class="works-grid">
                 <div class="work-card glass-panel">
                     <div class="card-media">
-                        <img src="pip_lullaby_box.png" alt="Lullaby Music Box" class="project-thumb">
+                        <img src="pip_lullaby_box.png" alt="Lullaby Music Box" class="project-thumb" onerror="this.style.display='none'">
                     </div>
                     <div class="card-header">
                         <h3>The Lullaby Lab</h3>
+                        <span style="font-size:.75rem;background:#d9f99d;color:#000;padding:2px 8px;border-radius:999px;border:1px solid #000">TIER 2 • Web Audio API</span>
                     </div>
-                    <p>Interactive Web Audio API chime synthesizer. Click sound pads below to sequence peaceful sleep frequencies.</p>
+                    <p>Interactive chime synthesizer. Click pads to sequence peaceful sleep frequencies. Each tone is generated live.</p>
                     
                     <div class="synth-pads">
                         <button class="synth-pad" data-note="261.63">C4</button>
@@ -77,14 +81,15 @@
 
                 <div class="work-card glass-panel">
                     <div class="card-media lantern-media-box" id="lanternMediaBox">
-                        <img src="pip_dream_lantern.png" alt="Dream Lantern" class="project-thumb" id="lanternImg">
+                        <img src="pip_dream_lantern.png" alt="Dream Lantern" class="project-thumb" id="lanternImg" onerror="this.style.display='none'">
+                        <span id="lanternHint" style="position:absolute;bottom:8px;font-size:.7rem;background:#0008;color:#fff;padding:2px 6px;border-radius:6px">Move cursor like flashlight 🔦</span>
                     </div>
                     <div class="card-header">
                         <h3>Nightlight Collection</h3>
                     </div>
-                    <p>Hand-poured bedside lanterns. Adjust hue intensity to eliminate scary shadows in bedroom corners.</p>
+                    <p>Hand-poured bedside lanterns. Adjust glow & hue to eliminate scary shadows in bedroom corners. Find 5 hidden stars!</p>
                     
-                    <div class="lantern-controls">
+                    <div class="lantern-controls" style="margin-top:10px">
                         <input type="range" id="glowSlider" min="20" max="100" value="80">
                     </div>
 
@@ -93,22 +98,19 @@
 
                 <div class="work-card glass-panel">
                     <div class="card-media">
-                        <img src="pip_portrait.png" alt="Pip Portrait" class="project-thumb">
+                        <img src="pip_portrait.png" alt="Pip Portrait" class="project-thumb" style="display:none" onerror="this.style.display='none'">
+                        <div class="map-container" style="width:100%">
+                            <svg viewBox="0 0 250 100" class="route-svg" style="width:100%;height:100%">
+                                <path d="M 20 50 Q 85 10 125 50 T 230 50" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,6" id="routePath"/>
+                                <circle cx="20" cy="50" r="6" fill="#f43f5e"/><circle cx="125" cy="50" r="6" fill="#fbbf24"/><circle cx="230" cy="50" r="6" fill="#34d399"/>
+                                <circle id="deliverySprite" cx="20" cy="50" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
+                            </svg>
+                        </div>
                     </div>
                     <div class="card-header">
                         <h3>Dream Delivery Routes</h3>
                     </div>
-                    <p>Real-time rooftop navigation vector route syncs delivery progress across residential quarters.</p>
-
-                    <div class="map-container">
-                        <svg viewBox="0 0 250 100" class="route-svg">
-                            <path d="M 20 50 Q 85 10 125 50 T 230 50" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,6" id="routePath"/>
-                            <circle cx="20" cy="50" r="6" fill="#f43f5e"/>
-                            <circle cx="125" cy="50" r="6" fill="#fbbf24"/>
-                            <circle cx="230" cy="50" r="6" fill="#34d399"/>
-                            <circle id="deliverySprite" cx="20" cy="50" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
-                        </svg>
-                    </div>
+                    <p>Real-time rooftop navigation. Dispatch Pip and watch him glide across the village with scroll-sync.</p>
 
                     <button class="action-btn" id="dispatchRouteBtn">🚀 Dispatch Delivery</button>
                 </div>
@@ -116,10 +118,12 @@
         </section>
 
         <section class="section-container">
-            <h2 class="section-heading"><span>02</span> Pip's Journey</h2>
+            <h2 class="section-heading"><span>02</span> Pip's Journey — Scroll to Reveal</h2>
             <div class="story-box glass-panel">
                 <div class="story-content">
-                    <p>Hatched from a floating stardust cocoon on a quiet midnight, Pip joined the Midnight Nursery to eliminate night terrors. Equipped with custom-tuned music boxes and soft warm lanterns, Pip glides across rooftops ensuring every little dreamer rests peacefully.</p>
+                    <p style="margin-bottom:12px"><b>Origin:</b> Hatched from a floating stardust cocoon on a quiet midnight, Pip was too tiny for day jobs but perfect for the night shift.</p>
+                    <p style="margin-bottom:12px"><b>Mission:</b> Pip joined the Midnight Nursery to eliminate night terrors. Equipped with custom-tuned music boxes and soft warm lanterns.</p>
+                    <p><b>Today:</b> Every night at 2:17 AM, Pip glides across rooftops ensuring every little dreamer rests peacefully. Dreams delivered counter keeps ticking. ✨</p>
                 </div>
             </div>
         </section>
@@ -127,9 +131,36 @@
         <section class="section-container text-center">
             <div class="easter-egg-box glass-panel" id="secretEggBox">
                 <span class="egg-icon" id="eggIcon">💤</span>
-                <p id="eggText">Pip is currently taking a power nap. Tap softly to wake them up!</p>
+                <p id="eggText">Pip is currently taking a power nap. Tap softly 5 times to wake them up! (Easter Egg)</p>
+                <small style="opacity:.6">Hint: Try clicking Pip avatar too 👶☁️</small>
             </div>
         </section>
+
+        <footer class="footer-credits glass-panel" style="padding:22px 18px">
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-bottom:12px">
+    <span style="background:var(--ink);color:var(--bg);padding:5px 12px;border-radius:999px;font-family:'VT323';font-size:1.1rem">Pip • Junior Dream Engineer • Track 1</span>
+    <span style="background:var(--lime);color:#000;padding:4px 10px;border-radius:999px;border:2px solid #000;font-size:.75rem;font-weight:800">haX.baby 2026 • 48hr Sprint</span>
+    <span style="background:var(--sky);color:#000;padding:4px 10px;border-radius:999px;border:2px solid #000;font-size:.75rem;font-weight:800">17-19 Oct • Public Commits</span>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:.82rem;opacity:.9">
+    <span>🎨 Art: Track 1 Asset Pack (pip_*.png)</span> • 
+    <span>🔊 Audio: Web Audio API (no external)</span> • 
+    <span>🔤 Fonts: Fredoka / VT323</span> • 
+    <span>💻 Vanilla JS</span>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px">
+    <span style="background:#ff8fa3;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">✨ Sparkle Trail +2</span>
+    <span style="background:#ffe8d6;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">📈 Odometer +1</span>
+    <span style="background:#7dd3fc;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">🔊 Click + Mute +3</span>
+    <span style="background:#d9f99d;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">🌀 Chaos Mode +5</span>
+  </div>
+
+  <p style="margin-top:14px;font-size:.78rem;opacity:.6;font-family:'Space Grotesk'">
+    <a href="https://github.com/Sraveena1992/pip-dream-engineer" target="_blank" style="text-decoration:underline">GitHub Repo</a> • Live on GitHub Pages • © haX.baby
+  </p>
+</footer>
 
     </main>
 
@@ -138,13 +169,13 @@
             <button class="modal-close" id="closeModal">&times;</button>
             <div class="modal-header">
                 <h2>Pip's Character Sheet</h2>
-                <p>Track 2: Original Character Profile</p>
+                <p>Track 1: Pip — Original by haX.baby organizers</p>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="margin-top:14px">
                 <div class="sheet-row"><span class="sheet-key">1. Name</span><span class="sheet-val">Pip</span></div>
-                <div class="sheet-row"><span class="sheet-key">2. What they are</span><span class="sheet-val">Starry-eared Dream Engineer with moon-goggles and a pastel aura.</span></div>
-                <div class="sheet-row"><span class="sheet-key">3. What they do</span><span class="sheet-val">Crafts chime lullabies, hand-pours nightlights, and navigates rooftop routes.</span></div>
-                <div class="sheet-row"><span class="sheet-key">4. Their story</span><span class="sheet-val">Hatched from a stardust cocoon to protect bedrooms from darkness.</span></div>
+                <div class="sheet-row"><span class="sheet-key">2. What they are</span><span class="sheet-val">Starry-eared Dream Engineer with moon-goggles and a pastel cloud. Born from stardust.</span></div>
+                <div class="sheet-row"><span class="sheet-key">3. What they do</span><span class="sheet-val">Crafts chime lullabies, hand-pours nightlights, and navigates rooftop dream routes.</span></div>
+                <div class="sheet-row"><span class="sheet-key">4. Their story</span><span class="sheet-val">Hatched from a stardust cocoon to protect bedrooms from darkness. Works 2:17 AM shift.</span></div>
                 <div class="sheet-row"><span class="sheet-key">5. Tagline</span><span class="sheet-val">“Soft tunes for deep, starlit naps.”</span></div>
             </div>
         </div>
