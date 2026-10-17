@@ -6,9 +6,11 @@
 
   ### 🌟 *“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways.”*
 
-  [![haX.baby Hackathon](https://img.shields.io/badge/haX.baby-Track%201%20Original%20Character-A23B5A?style=for-the-badge)](https://hax.baby)
-  [![Stack](https://img.shields.io/badge/Stack-HTML5%20|%20CSS3%20|%20Vanilla%20JS-38bdf8?style=for-the-badge)](#-tech-stack)
-  [![Live Demo](https://img.shields.io/badge/Live-GitHub%20Pages-34d399?style=for-the-badge)](https://pip-dream-engineer.onrender.com/)
+<p align="center">
+<a href="https://pip-dream-engineer.onrender.com/"><img src="./live-glow.png" height="42" /></a>
+<img src="https://img.shields.io/badge/TRACK_1-ORIGINAL_CHARACTER-c4b5fd?style=for-the-badge&labelColor=3c324d" />
+<img src="https://img.shields.io/badge/STACK-HTML5_%7C_CSS3_%7C_Vanilla_JS-fde68a?style=for-the-badge&labelColor=4a3f2a" />
+</p>
 
   **Built for haX.baby 2026 • 48hr Sprint • 17-19 Oct 2026 • Early Web Soul + Dreamcore Aesthetic**
 
