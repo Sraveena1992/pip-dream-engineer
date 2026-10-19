@@ -1,91 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Pip's Midnight Nursery</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=VT323&family=Space+Grotesk&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=VT323&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box} body{margin:0;background:#fff7e9;font-family:'Space Grotesk';overflow-x:hidden}
-.hud{display:flex;justify-content:space-between;padding:10px;position:sticky;top:0;background:#fff7e9;z-index:10;border-bottom:2px dashed #000}
-.hero{text-align:center;padding:20px} .hero img{width:160px;height:160px;border-radius:50%;border:4px solid #000;background:#fff;object-fit:cover}
-h2{font-family:'VT323';font-size:2rem;margin:22px 16px 10px} .wrap{max-width:900px;margin:auto;padding:0 12px}
-.card{background:#fff;border:3px solid #000;border-radius:18px;padding:14px;box-shadow:6px 6px 0 #000;margin-bottom:18px}
-.poem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.p-card{background:#fffefb;border:3px solid #000;border-radius:14px;padding:12px;display:flex;flex-direction:column;justify-content:space-between;min-height:170px}
-.p-card p{font-size:.85rem;white-space:pre-line;margin:6px 0}
-.btn{border:2px solid #000;border-radius:999px;padding:6px 12px;font-weight:700;cursor:pointer;background:#ff8fa3;box-shadow:2px 2px 0 #000}
-.btn.blue{background:#7dd3fc} .btn:active{transform:translate(2px,2px);box-shadow:none}
-#gameBox{width:100%;height:220px;background:#0f0f23;border:3px solid #000;border-radius:12px;position:relative;overflow:hidden}
-.dot{position:absolute;width:26px;height:26px;background:radial-gradient(#fff,#fbbf24);border-radius:50%;border:2px solid #000;cursor:pointer;animation:pop .2s}
-@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
-/* CHAT FINAL FIX */
-#chatW{position:fixed;right:14px;bottom:14px;width:320px;z-index:99999}
-#chatB{display:none;flex-direction:column;height:360px;background:#fffefb;border:3px solid #000;border-radius:16px;box-shadow:8px 8px 0 #000;overflow:hidden;margin-bottom:70px}
-#chatB.open{display:flex}
-#chatH{background:#ff8fa3;padding:8px 12px;display:flex;justify-content:space-between;font-family:'VT323';font-size:1.2rem;border-bottom:2px solid #000}
-#chatM{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
-.m{padding:6px 10px;border-radius:12px;max-width:82%;font-size:.9rem;border:1px solid #000}
-.m.p{background:#d9f99d} .m.u{background:#7dd3fc;align-self:flex-end}
-#chatIn{display:flex;border-top:2px solid #000} #chatIn input{flex:1;border:none;padding:10px} 
-#chatTog{position:absolute;right:0;bottom:0;width:64px;height:64px;border-radius:50%;border:3px solid #000;background:#ff8fa3;box-shadow:4px 4px 0 #000;font-size:28px;cursor:pointer}
+/* SMALL FIXES ONLY - original ko touch nahi kiya */
+.poem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.p-card{background:#fffefb;border:3px solid #000;border-radius:14px;padding:12px;min-height:165px;display:flex;flex-direction:column;gap:6px}
+#gameBox{width:100%;height:220px;background:radial-gradient(#1a1a2e,#000);border:3px solid #000;border-radius:12px;position:relative;overflow:hidden}
+.star-dot{position:absolute;width:26px;height:26px;background:radial-gradient(#fff,#fbbf24);border-radius:50%;border:2px solid #000;cursor:pointer}
+#pipChatWrap{position:fixed;right:14px;bottom:14px;width:330px;z-index:99999}
+#pipChatBtn{position:absolute;right:0;bottom:0;width:64px;height:64px;border-radius:50%;border:3px solid #000;background:#ff8fa3;box-shadow:4px 4px 0 #000;font-size:28px;cursor:pointer;z-index:2}
+#pipChatBox{display:none;flex-direction:column;height:380px;background:#fffefb;border:3px solid #000;border-radius:18px;box-shadow:8px 8px 0 #000;margin-bottom:74px;overflow:hidden}
+#pipChatBox.open{display:flex}
+.chatH{background:#ff8fa3;padding:8px 12px;display:flex;justify-content:space-between;font-family:'VT323';font-size:1.2rem;border-bottom:2px solid #000}
+.chatM{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.msg{padding:6px 10px;border-radius:12px;border:1px solid #000;max-width:82%;font-size:.9rem}
+.msg.pip{background:#d9f99d;align-self:flex-start}.msg.you{background:#7dd3fc;align-self:flex-end}
+.easter{ display:none; position:fixed; inset:0; background:#000a; z-index:100000; align-items:center; justify-content:center; flex-direction:column; color:#fff; font-family:'VT323'; font-size:2rem; text-align:center}
+.easter.show{display:flex}
+.confetti{position:absolute; width:10px; height:10px; background:#fbbf24; animation:fall 2s linear}
+@keyframes fall{0%{transform:translateY(-100vh) rotate(0)}100%{transform:translateY(100vh) rotate(720deg)}}
 </style>
 </head>
-<body>
-<div class="hud"><div style="background:#d9f99d;border:2px solid #000;border-radius:999px;padding:4px 10px;font-family:'VT323'">LIVE NURSERY DISPATCH - PIP ON DUTY</div><div>✨ Chaos Mode</div></div>
-<div class="wrap">
-<div class="hero"><img src="pip_avatar_cloud.png" onerror="this.src='https://i.imgur.com/8Km9tLL.png'" alt="pip"><h1 style="font-family:'Fredoka';font-size:3rem;margin:10px 0">Pip</h1><p>Junior Dream Engineer @ The Midnight Nursery</p></div>
+<body class="night-mode">
+<canvas id="starfieldCanvas"></canvas>
+<nav class="hud-nav"><div class="hud-badge"><span class="pulse-dot"></span> LIVE NURSERY DISPATCH — PIP ON DUTY</div><div class="hud-controls"><button id="chaosBtn" class="hud-btn">✨ Chaos Mode</button><button id="muteBtn" class="hud-btn">🔊 Audio: ON</button></div></nav>
 
-<h2>02 Lullaby Poems & Songs - New!</h2>
-<div class="card"><p style="margin:0 0 10px">Pip writes tiny poems every night at 2:17 AM. Tap to play chime + read.</p>
-<div class="poem-grid">
-<div class="p-card"><b>🌙 Starlit Attic</b><p>Hush little window, close your eye,
-Pip is stitching clouds so high.
-One, two, dream-boat in the sky.</p><button class="btn playP" data-n="392">▶ Play Chime</button></div>
-<div class="p-card"><b>🧸 Cloud Pockets</b><p>Pip keeps pockets full of light,
-For kids who fear the quiet night.
-Take one sparkle, hold it tight.</p><button class="btn playP" data-n="329">▶ Play Chime</button></div>
-<div class="p-card"><b>🔦 Lantern Song</b><p>Scary shadows, go away,
-Lantern hums a yellow sway.
-Pip is here till break of day.</p><button class="btn playP" data-n="523">▶ Play Chime</button></div>
-<div class="p-card"><b>☁️ Rooftop Whisper</b><p>Tip-toe, tip-toe on the roof,
-Dreams don't need no hard proof.
-Sleep now, soft as Pip's own fluff.</p><button class="btn playP" data-n="261">▶ Play Chime</button></div>
-</div></div>
+<main class="nursery-wrapper">
+<header class="hero-card glass-panel">
+<div class="character-viewport" id="pipAvatar" title="Click me 5x for secret!"><img src="pip_avatar_cloud.png" alt="Pip" class="pip-hero-img" onerror="this.src='https://i.imgur.com/8Km9tLL.png'"></div>
+<h1 class="glow-title">Pip</h1><p class="role-badge">Junior Dream Engineer @ The Midnight Nursery</p>
+<p class="tagline">“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways.”</p>
+<div class="hero-actions"><button id="aboutBtn" class="primary-btn">📖 Open Character Sheet</button><button id="moodBtn" class="secondary-btn">🌙 Toggle Day/Night</button></div>
+</header>
 
-<h2>03 Mini-Game: Catch Pip's Dreams</h2>
-<div class="card"><div style="display:flex;justify-content:space-between;font-family:'VT323';font-size:1.2rem;margin-bottom:8px"><span>Score: <b id="sc">0</b></span><span>Time: <b id="tm">30</b>s</span><button class="btn blue" id="startG">Start Game</button></div><div id="gameBox"><div style="text-align:center;padding:80px 10px;opacity:.6">Click Start to catch falling stars! ⭐</div></div></div>
-</div>
+<section class="odometer-bar glass-panel"><div class="stat-item"><span class="stat-label">Dreams Delivered</span><span id="odometer" class="stat-value">01,204</span></div><div class="stat-item"><span class="stat-label">Nursery Mood</span><span id="moodLabel" class="stat-value">Cozy Midnight</span></div><div class="stat-item"><span class="stat-label">Active Route</span><span class="stat-value">Sector B: Attic Lofts</span></div></section>
+
+<section class="section-container"><h2 class="section-heading"><span>01</span> The Dream Workshop</h2>
+<div class="works-grid">
+<div class="work-card glass-panel"><div class="card-header"><h3>The Lullaby Lab</h3></div><p>Interactive chime synthesizer.</p><div class="synth-pads"><button class="synth-pad" data-note="261.63">C4</button><button class="synth-pad" data-note="329.63">E4</button><button class="synth-pad" data-note="392.00">G4</button><button class="synth-pad" data-note="523.25">C5</button></div><button class="action-btn" id="playFullLullaby">✨ Play Auto Lullaby</button></div>
+<div class="work-card glass-panel"><div class="card-header"><h3>Nightlight Collection</h3></div><p>Adjust glow & hue.</p><input type="range" id="glowSlider" min="20" max="100" value="80"><button class="action-btn" id="cycleLanternColor">🎨 Switch Lantern Color</button></div>
+<div class="work-card glass-panel"><div class="card-header"><h3>Dream Delivery Routes</h3></div><p>Dispatch Pip.</p><button class="action-btn" id="dispatchRouteBtn">🚀 Dispatch Delivery</button></div>
+</div></section>
+
+<section class="section-container"><h2 class="section-heading"><span>02</span> Lullaby Poems & Songs</h2>
+<div class="glass-panel" style="padding:14px"><div class="poem-grid">
+<div class="p-card"><b>🌙 Starlit Attic</b><p style="font-size:.85rem;white-space:pre-line">Hush little window, close your eye,
+Pip is stitching clouds so high.</p><button class="action-btn playPoem" data-note="392">▶ Play</button></div>
+<div class="p-card"><b>🧸 Cloud Pockets</b><p style="font-size:.85rem;white-space:pre-line">Pip keeps pockets full of light,
+For kids who fear the quiet night.</p><button class="action-btn playPoem" data-note="329">▶ Play</button></div>
+<div class="p-card"><b>🔦 Lantern Song</b><p style="font-size:.85rem;white-space:pre-line">Scary shadows, go away,
+Lantern hums a yellow sway.</p><button class="action-btn playPoem" data-note="523">▶ Play</button></div>
+<div class="p-card"><b>☁️ Rooftop Whisper</b><p style="font-size:.85rem;white-space:pre-line">Tip-toe on the roof,
+Dreams don't need proof.</p><button class="action-btn playPoem" data-note="261">▶ Play</button></div>
+</div></div></section>
+
+<section class="section-container"><h2 class="section-heading"><span>03</span> Mini-Game: Catch Pip's Dreams</h2>
+<div class="glass-panel" style="padding:14px"><div style="display:flex;justify-content:space-between;font-family:'VT323';font-size:1.2rem;margin-bottom:8px"><span>Score: <b id="gameScore">0</b></span><span>Time: <b id="gameTime">30</b>s</span><button id="startGame" class="secondary-btn">Start Game</button></div><div id="gameBox"><div style="text-align:center;padding:80px;opacity:.6">Click Start to catch falling stars! ⭐</div></div><p style="margin-top:8px;font-size:.8rem;opacity:.7">Tip: Each star = +1 Dream delivered to odometer!</p></div></section>
+
+<section class="section-container"><h2 class="section-heading"><span>04</span> Pip's Journey</h2><div class="story-box glass-panel"><div class="story-content"><p><b>Origin:</b> Hatched from stardust cocoon in the attic of the Midnight Nursery.</p><p><b>Mission:</b> Eliminate night terrors with lanterns and lullabies.</p><p><b>Today:</b> 2:17 AM shift, Sector B: Attic Lofts. Pip is stitching dreams for kids who can't sleep. ✨</p><p><b>Easter Egg:</b> Click Pip 5 times → <i>Pip is AWAKE ! Confetti Dreams !</i></p></div></div></section>
+
+<footer class="footer-credits glass-panel" style="padding:18px;text-align:center"><p>🎨 Track 1 • 🔊 Web Audio API • 💻 Vanilla JS • © haX.baby — EAST EGG UNLOCK ! Pip is AWAKE ! Confetti Dreams !</p></footer>
+</main>
+
+<!-- CHARACTER SHEET -->
+<div class="modal-backdrop" id="characterModal" style="display:none;position:fixed;inset:0;background:#0008;z-index:9999;align-items:center;justify-content:center"><div class="modal-window glass-panel" style="background:#fffefb;border:3px solid #000;border-radius:18px;padding:20px;max-width:400px;width:90%;position:relative"><button id="closeModal" style="position:absolute;right:10px;top:10px;border:2px solid #000;border-radius:50%;width:32px;height:32px;background:#ff8fa3">×</button><h2 style="font-family:'VT323'">Pip's Character Sheet</h2><p><b>Junior Dream Engineer</b></p><p>🌙 Age: 7 moon cycles<br>🧸 Specialty: Lanterns & Lullabies<br>💛 Dream: No child sleeps scared</p></div></div>
+
+<!-- EASTER EGG -->
+<div class="easter" id="easterEgg"><div style="font-size:4rem">🧸</div><div>EAST EGG UNLOCK !</div><div style="color:#fbbf24">Pip is AWAKE !</div><div>Confetti Dreams ! ✨</div><button id="closeEaster" class="primary-btn" style="margin-top:20px">Continue Dreaming</button></div>
 
 <!-- CHAT -->
-<div id="chatW">
-<div id="chatB"><div id="chatH"><span>💬 Pip is awake</span><span id="chatX" style="cursor:pointer">✕</span></div><div id="chatM"><div class="m p">Hi! I'm Pip 🧸 on night duty. Scared? Can't sleep? Tell me!</div></div><div id="chatIn"><input id="cIn" placeholder="Ask Pip: help me sleep..."><button id="cSend" style="border:none;background:#000;color:#fff;padding:0 14px;font-weight:700">></button></div></div>
-<button id="chatTog">🧸</button>
-</div>
+<div id="pipChatWrap"><div id="pipChatBox"><div class="chatH"><span>💬 Pip is awake</span><span id="chatMin" style="cursor:pointer">✕</span></div><div class="chatM" id="chatMsgs"><div class="msg pip">Hi! I'm Pip 🧸 on night duty. Scared? Can't sleep? Tell me!</div></div><div style="display:flex;border-top:2px solid #000"><input id="chatInput" placeholder="Ask Pip..." style="flex:1;border:none;padding:10px"><button id="chatSend" style="border:none;background:#000;color:#fff;padding:0 14px;font-weight:700">></button></div></div><button id="pipChatBtn">🧸</button></div>
 
 <script>
-// NO external script.js dependency
-document.addEventListener('DOMContentLoaded',()=>{
-const chatB=document.getElementById('chatB'), tog=document.getElementById('chatTog'), chatX=document.getElementById('chatX');
-tog.addEventListener('click',()=>{chatB.classList.toggle('open'); tog.textContent=chatB.classList.contains('open')?'✕':'🧸';});
-chatX.addEventListener('click',()=>{chatB.classList.remove('open'); tog.textContent='🧸';});
-const mBox=document.getElementById('chatM'), cIn=document.getElementById('cIn'), cSend=document.getElementById('cSend');
-function addM(t,c){const d=document.createElement('div');d.className='m '+c;d.textContent=t;mBox.appendChild(d);mBox.scrollTop=mBox.scrollHeight;}
-function reply(q){q=q.toLowerCase(); if(q.includes('scared')) return "Hold my paw 🐾 Breathe in-3, out-4. Lantern on!"; if(q.includes('sleep')) return "Play Starlit Attic poem + close eyes ✨"; if(q.includes('lullaby')) return "4 songs above, tap ▶!"; return "Try: scared, sleep, lullaby 🌙"; }
-cSend.addEventListener('click',()=>{if(!cIn.value.trim())return; addM(cIn.value,'u'); const r=reply(cIn.value); setTimeout(()=>addM(r,'p'),300); cIn.value='';});
-cIn.addEventListener('keydown',e=>{if(e.key==='Enter') cSend.click()});
+// ONE JS - NO CONFLICT
+let audioCtx=null; function playTone(f){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.frequency.value=f; o.type='sine'; o.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(0.35,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+1); o.start(); o.stop(audioCtx.currentTime+1); }
+document.querySelectorAll('.playPoem,.synth-pad').forEach(b=>b.addEventListener('click',()=>{ playTone(parseFloat(b.dataset.note)); const t=b.textContent; if(b.classList.contains('playPoem')){ b.textContent='♪ Playing...'; setTimeout(()=>b.textContent=t,1000);} }));
 
-// POEM AUDIO - 100% working
-let actx=null;
-function playChime(f){ if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(), g=actx.createGain(); o.frequency.value=f; o.type='sine'; o.connect(g); g.connect(actx.destination); g.gain.setValueAtTime(0.4,actx.currentTime); g.gain.exponentialRampToValueAtTime(0.01,actx.currentTime+1); o.start(); o.stop(actx.currentTime+1); }
-document.querySelectorAll('.playP').forEach(b=>{ b.addEventListener('click',()=>{ playChime(parseFloat(b.dataset.n)); const t=b.textContent; b.textContent='♪ Playing...'; setTimeout(()=>b.textContent=t,1000); }); });
+const chatBox=document.getElementById('pipChatBox'), chatBtn=document.getElementById('pipChatBtn');
+chatBtn.onclick=()=>{ chatBox.classList.toggle('open'); chatBtn.textContent=chatBox.classList.contains('open')?'✕':'🧸'; };
+document.getElementById('chatMin').onclick=()=>{ chatBox.classList.remove('open'); chatBtn.textContent='🧸'; };
+const msgs=document.getElementById('chatMsgs'), cIn=document.getElementById('chatInput');
+function addM(t,who){ const d=document.createElement('div'); d.className='msg '+who; d.textContent=t; msgs.appendChild(d); msgs.scrollTop=9999; }
+function pipReply(q){ q=q.toLowerCase(); if(q.includes('scared')) return 'Hold my paw 🐾 Breathe 3-4!'; if(q.includes('sleep')) return 'Play Starlit Attic + close eyes ✨'; if(q.includes('lullaby')) return '4 lullabies above, tap ▶!'; return 'Say: scared, sleep, lullaby 🌙'; }
+document.getElementById('chatSend').onclick=()=>{ if(!cIn.value.trim()) return; addM(cIn.value,'you'); const r=pipReply(cIn.value); setTimeout(()=>addM(r,'pip'),300); cIn.value=''; const odo=document.getElementById('odometer'); if(odo){ let v=parseInt(odo.textContent.replace(',','')); odo.textContent=(v+1).toString().padStart(5,'0'); } };
+cIn.addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('chatSend').click(); });
 
 // GAME
-let score=0,time=30,t1=null,t2=null; const sc=document.getElementById('sc'), tm=document.getElementById('tm'), gBox=document.getElementById('gameBox');
-document.getElementById('startG').addEventListener('click',()=>{ score=0;time=30;sc.textContent=0;tm.textContent=30;gBox.innerHTML=''; clearInterval(t1);clearInterval(t2);
-t1=setInterval(()=>{ time--; tm.textContent=time; if(time<=0){clearInterval(t1);clearInterval(t2); gBox.innerHTML='<div style="text-align:center;padding:70px"><b>Done!</b> You delivered '+score+' dreams! ✨</div>'; } },1000);
-t2=setInterval(()=>{ if(time<=0)return; const d=document.createElement('div'); d.className='dot'; d.style.left=Math.random()*85+'%'; d.style.top=Math.random()*75+'%'; d.addEventListener('click',()=>{score++; sc.textContent=score; d.remove();}); gBox.appendChild(d); setTimeout(()=>d.remove(),1200); },650);
+let sc=0,tm=30,t1,t2; const scEl=document.getElementById('gameScore'), tmEl=document.getElementById('gameTime'), gBox=document.getElementById('gameBox');
+document.getElementById('startGame').onclick=()=>{ sc=0;tm=30;scEl.textContent=0;tmEl.textContent=30;gBox.innerHTML='';clearInterval(t1);clearInterval(t2);
+t1=setInterval(()=>{ tm--; tmEl.textContent=tm; if(tm<=0){ clearInterval(t1);clearInterval(t2); gBox.innerHTML='<div style="text-align:center;padding:70px"><b>Done!</b> '+sc+' dreams delivered! ✨</div>'; } },1000);
+t2=setInterval(()=>{ if(tm<=0) return; const d=document.createElement('div'); d.className='star-dot'; d.style.left=Math.random()*85+'%'; d.style.top=Math.random()*75+'%'; d.onclick=()=>{ sc++; scEl.textContent=sc; d.remove(); }; gBox.appendChild(d); setTimeout(()=>d.remove(),1200); },600);
+};
+
+// CHARACTER SHEET
+const modal=document.getElementById('characterModal');
+document.getElementById('aboutBtn').onclick=()=>{ modal.style.display='flex'; };
+document.getElementById('closeModal').onclick=()=>{ modal.style.display='none'; };
+modal.onclick=e=>{ if(e.target===modal) modal.style.display='none'; };
+
+// EASTER EGG - Pip is AWAKE + Confetti
+let clicks=0; const easter=document.getElementById('easterEgg');
+document.getElementById('pipAvatar').addEventListener('click',()=>{
+ clicks++; if(clicks>=5){ easter.classList.add('show'); clicks=0;
+  for(let i=0;i<30;i++){ const c=document.createElement('div'); c.className='confetti'; c.style.left=Math.random()*100+'%'; c.style.background=['#fbbf24','#ff8fa3','#7dd3fc','#d9f99d'][Math.floor(Math.random()*4)]; c.style.animationDelay=Math.random()*0.5+'s'; easter.appendChild(c); setTimeout(()=>c.remove(),2000); }
+  playTone(523); setTimeout(()=>playTone(659),150);
+ }
 });
-});
+document.getElementById('closeEaster').onclick=()=>{ easter.classList.remove('show'); };
+document.getElementById('moodBtn').onclick=()=>{ document.body.classList.toggle('day-mode'); };
+document.getElementById('chaosBtn').onclick=()=>{ document.body.classList.toggle('chaos'); };
 </script>
 </body>
 </html>
