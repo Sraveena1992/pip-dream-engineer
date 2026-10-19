@@ -7,15 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=VT323&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
     <style>
-      /* FIX 1: Poems ka white box hatane ke liye + cute cards */
-      .poem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
-      .poem-card{padding:12px;border-radius:14px;background:#fffefb;border:2px solid #000;box-shadow:4px 4px 0 #000;display:flex;flex-direction:column;gap:8px;min-height:165px}
-      .poem-card p{font-size:.85rem;white-space:pre-line;margin:0}
-      /* FIX 2: Game box */
-      #gameBox{width:100%;height:220px;background:radial-gradient(#1a1a2e,#000);border:3px solid #000;border-radius:12px;position:relative;overflow:hidden}
-      .star-dot{position:absolute;width:26px;height:26px;background:radial-gradient(#fff,#fbbf24);border-radius:50%;border:2px solid #000;cursor:pointer;animation:pop .2s}
-      @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
-      /* FIX 3: Chat cute toggle - yehi main bug tha */
       #pipChatWrap{position:fixed;right:14px;bottom:14px;width:330px;z-index:99999}
       #pipChatToggle{position:absolute;right:0;bottom:0;width:64px;height:64px;border-radius:50%;border:3px solid #000;background:#ff8fa3;box-shadow:4px 4px 0 #000;font-size:28px;cursor:pointer;z-index:2}
       #pipChatBox{display:none;flex-direction:column;height:380px;background:#fffefb;border:3px solid #000;border-radius:18px;box-shadow:8px 8px 0 #000;margin-bottom:74px;overflow:hidden}
@@ -27,9 +18,12 @@
     </style>
 </head>
 <body class="night-mode">
+
     <div class="progress-bar" style="position:fixed;top:0;left:0;height:4px;background:#ff8fa3;z-index:999;width:0%;transition:.1s"></div>
+
     <canvas id="starfieldCanvas"></canvas>
     <canvas id="sparkleCanvas"></canvas>
+
     <nav class="hud-nav">
         <div class="hud-badge"><span class="pulse-dot"></span> LIVE NURSERY DISPATCH — PIP ON DUTY</div>
         <div class="hud-controls">
@@ -37,93 +31,104 @@
             <button id="muteBtn" class="hud-btn">🔊 Audio: ON</button>
         </div>
     </nav>
+
     <main class="nursery-wrapper">
+
         <header class="hero-card glass-panel">
             <div class="character-viewport" title="Click me 5x for secret!">
                 <img src="pip_avatar_cloud.png" alt="Pip on Cloud" class="pip-hero-img" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
                 <div class="floating-eyes" style="display:none">👀</div>
             </div>
+
             <h1 class="glow-title">Pip</h1>
             <p class="role-badge">Junior Dream Engineer @ The Midnight Nursery</p>
             <p class="tagline">“Crafting soothing soundscapes, soft bedside lanterns, and starlit rooftop dreamways. — Built with sparkles, chimes & chaos.”</p>
+
             <div class="hero-actions">
                 <button id="aboutBtn" class="primary-btn">📖 Open Character Sheet</button>
                 <button id="moodBtn" class="secondary-btn">🌙 Toggle Day/Night</button>
             </div>
         </header>
+
         <section class="odometer-bar glass-panel">
-            <div class="stat-item"><span class="stat-label">Dreams Delivered</span><span id="odometer" class="stat-value">01,204</span></div>
-            <div class="stat-item"><span class="stat-label">Nursery Mood</span><span id="moodLabel" class="stat-value">Cozy Midnight</span></div>
-            <div class="stat-item"><span class="stat-label">Active Route</span><span class="stat-value" id="routeLabel">Sector B: Attic Lofts</span></div>
+            <div class="stat-item">
+                <span class="stat-label">Dreams Delivered</span>
+                <span id="odometer" class="stat-value">01,204</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Nursery Mood</span>
+                <span id="moodLabel" class="stat-value">Cozy Midnight</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Active Route</span>
+                <span class="stat-value" id="routeLabel">Sector B: Attic Lofts</span>
+            </div>
         </section>
+
         <section class="section-container">
             <h2 class="section-heading"><span>01</span> The Dream Workshop</h2>
+
             <div class="works-grid">
                 <div class="work-card glass-panel">
-                    <div class="card-media"><img src="pip_lullaby_box.png" alt="Lullaby Music Box" class="project-thumb" onerror="this.style.display='none'"></div>
-                    <div class="card-header"><h3>The Lullaby Lab</h3><span style="font-size:.75rem;background:#d9f99d;color:#000;padding:2px 8px;border-radius:999px;border:1px solid #000">TIER 2 • Web Audio API</span></div>
+                    <div class="card-media">
+                        <img src="pip_lullaby_box.png" alt="Lullaby Music Box" class="project-thumb" onerror="this.style.display='none'">
+                    </div>
+                    <div class="card-header">
+                        <h3>The Lullaby Lab</h3>
+                        <span style="font-size:.75rem;background:#d9f99d;color:#000;padding:2px 8px;border-radius:999px;border:1px solid #000">TIER 2 • Web Audio API</span>
+                    </div>
                     <p>Interactive chime synthesizer. Click pads to sequence peaceful sleep frequencies. Each tone is generated live.</p>
+                    
                     <div class="synth-pads">
                         <button class="synth-pad" data-note="261.63">C4</button>
                         <button class="synth-pad" data-note="329.63">E4</button>
                         <button class="synth-pad" data-note="392.00">G4</button>
                         <button class="synth-pad" data-note="523.25">C5</button>
                     </div>
+
                     <button class="action-btn" id="playFullLullaby">✨ Play Auto Lullaby</button>
                 </div>
+
                 <div class="work-card glass-panel">
                     <div class="card-media lantern-media-box" id="lanternMediaBox">
                         <img src="pip_dream_lantern.png" alt="Dream Lantern" class="project-thumb" id="lanternImg" onerror="this.style.display='none'">
                         <span id="lanternHint" style="position:absolute;bottom:8px;font-size:.7rem;background:#0008;color:#fff;padding:2px 6px;border-radius:6px">Move cursor like flashlight 🔦</span>
                     </div>
-                    <div class="card-header"><h3>Nightlight Collection</h3></div>
+                    <div class="card-header">
+                        <h3>Nightlight Collection</h3>
+                    </div>
                     <p>Hand-poured bedside lanterns. Adjust glow & hue to eliminate scary shadows in bedroom corners. Find 5 hidden stars!</p>
-                    <div class="lantern-controls" style="margin-top:10px"><input type="range" id="glowSlider" min="20" max="100" value="80"></div>
+                    
+                    <div class="lantern-controls" style="margin-top:10px">
+                        <input type="range" id="glowSlider" min="20" max="100" value="80">
+                    </div>
+
                     <button class="action-btn" id="cycleLanternColor">🎨 Switch Lantern Color</button>
                 </div>
+
                 <div class="work-card glass-panel">
-                    <div class="card-media"><div class="map-container" style="width:100%"><svg viewBox="0 0 250 100" class="route-svg" style="width:100%;height:100%"><path d="M 20 50 Q 85 10 125 50 T 230 50" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,6" id="routePath"/><circle cx="20" cy="50" r="6" fill="#f43f5e"/><circle cx="125" cy="50" r="6" fill="#fbbf24"/><circle cx="230" cy="50" r="6" fill="#34d399"/><circle id="deliverySprite" cx="20" cy="50" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/></svg></div></div>
-                    <div class="card-header"><h3>Dream Delivery Routes</h3></div>
+                    <div class="card-media">
+                        <img src="pip_portrait.png" alt="Pip Portrait" class="project-thumb" style="display:none" onerror="this.style.display='none'">
+                        <div class="map-container" style="width:100%">
+                            <svg viewBox="0 0 250 100" class="route-svg" style="width:100%;height:100%">
+                                <path d="M 20 50 Q 85 10 125 50 T 230 50" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6,6" id="routePath"/>
+                                <circle cx="20" cy="50" r="6" fill="#f43f5e"/><circle cx="125" cy="50" r="6" fill="#fbbf24"/><circle cx="230" cy="50" r="6" fill="#34d399"/>
+                                <circle id="deliverySprite" cx="20" cy="50" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <h3>Dream Delivery Routes</h3>
+                    </div>
                     <p>Real-time rooftop navigation. Dispatch Pip and watch him glide across the village with scroll-sync.</p>
+
                     <button class="action-btn" id="dispatchRouteBtn">🚀 Dispatch Delivery</button>
                 </div>
             </div>
         </section>
 
-        <!-- NEW: Poems - ye tumne add kiya tha, design same rakha hai -->
         <section class="section-container">
-            <h2 class="section-heading"><span>02</span> Lullaby Poems & Songs — New!</h2>
-            <div class="glass-panel" style="padding:14px">
-                <p>Pip writes tiny poems every night at 2:17 AM. Tap to play chime + read.</p>
-                <div class="poem-grid">
-                    <div class="poem-card"><b>🌙 Starlit Attic</b><p>Hush little window, close your eye,
-Pip is stitching clouds so high.
-One, two, dream-boat in the sky.</p><button class="action-btn playPoem" data-note="392">▶ Play Chime</button></div>
-                    <div class="poem-card"><b>🧸 Cloud Pockets</b><p>Pip keeps pockets full of light,
-For kids who fear the quiet night.
-Take one sparkle, hold it tight.</p><button class="action-btn playPoem" data-note="329">▶ Play Chime</button></div>
-                    <div class="poem-card"><b>🔦 Lantern Song</b><p>Scary shadows, go away,
-Lantern hums a yellow sway.
-Pip is here till break of day.</p><button class="action-btn playPoem" data-note="523">▶ Play Chime</button></div>
-                    <div class="poem-card"><b>☁️ Rooftop Whisper</b><p>Tip-toe, tip-toe on the roof,
-Dreams don't need no hard proof.
-Sleep now, soft as Pip's own fluff.</p><button class="action-btn playPoem" data-note="261">▶ Play Chime</button></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- NEW: Game -->
-        <section class="section-container">
-            <h2 class="section-heading"><span>03</span> Mini-Game: Catch Pip's Dreams</h2>
-            <div class="glass-panel" style="padding:14px">
-                <div style="display:flex;justify-content:space-between;font-family:'VT323';font-size:1.2rem;margin-bottom:8px"><span>Score: <b id="gameScore">0</b></span><span>Time: <b id="gameTime">30</b>s</span><button id="startGame" class="secondary-btn">Start Game</button></div>
-                <div id="gameBox"><div style="text-align:center;padding:80px;opacity:.6">Click Start to catch falling stars! ⭐</div></div>
-                <p style="margin-top:8px;font-size:.8rem;opacity:.7">Tip: Each star = +1 Dream delivered to odometer!</p>
-            </div>
-        </section>
-
-        <section class="section-container">
-            <h2 class="section-heading"><span>04</span> Pip's Journey — Scroll to Reveal</h2>
+            <h2 class="section-heading"><span>02</span> Pip's Journey — Scroll to Reveal</h2>
             <div class="story-box glass-panel">
                 <div class="story-content">
                     <p style="margin-bottom:12px"><b>Origin:</b> Hatched from a floating stardust cocoon on a quiet midnight, Pip was too tiny for day jobs but perfect for the night shift.</p>
@@ -132,6 +137,7 @@ Sleep now, soft as Pip's own fluff.</p><button class="action-btn playPoem" data-
                 </div>
             </div>
         </section>
+
         <section class="section-container text-center">
             <div class="easter-egg-box glass-panel" id="secretEggBox">
                 <span class="egg-icon" id="eggIcon">💤</span>
@@ -139,28 +145,42 @@ Sleep now, soft as Pip's own fluff.</p><button class="action-btn playPoem" data-
                 <small style="opacity:.6">Hint: Try clicking Pip avatar too 👶☁️</small>
             </div>
         </section>
+
         <footer class="footer-credits glass-panel" style="padding:22px 18px">
-          <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-bottom:12px">
-            <span style="background:var(--ink);color:var(--bg);padding:5px 12px;border-radius:999px;font-family:'VT323';font-size:1.1rem">Pip • Junior Dream Engineer • Track 1</span>
-            <span style="background:var(--lime);color:#000;padding:4px 10px;border-radius:999px;border:2px solid #000;font-size:.75rem;font-weight:800">haX.baby 2026 • 48hr Sprint</span>
-            <span style="background:var(--sky);color:#000;padding:4px 10px;border-radius:999px;border:2px solid #000;font-size:.75rem;font-weight:800">17-19 Oct • Public Commits</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:.82rem;opacity:.9">
-            <span>🎨 Art: Track 1 Asset Pack (pip_*.png)</span> • <span>🔊 Audio: Web Audio API</span> • <span>🔤 Fonts: Fredoka / VT323</span> • <span>💻 Vanilla JS</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px">
-            <span style="background:#ff8fa3;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">✨ Sparkle Trail +2</span>
-            <span style="background:#ffe8d6;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">📈 Odometer +1</span>
-            <span style="background:#7dd3fc;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">🔊 Click + Mute +3</span>
-            <span style="background:#d9f99d;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">🌀 Chaos Mode +5</span>
-          </div>
-          <p style="margin-top:14px;font-size:.78rem;opacity:.6;font-family:'Space Grotesk'"><a href="https://github.com/Sraveena1992/pip-dream-engineer" target="_blank" style="text-decoration:underline">GitHub Repo</a> • Live on GitHub Pages • © haX.baby</p>
-        </footer>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-bottom:12px">
+    <span style="background:var(--ink);color:var(--bg);padding:5px 12px;border-radius:999px;font-family:'VT323';font-size:1.1rem">Pip • Junior Dream Engineer • Track 1</span>
+    <span style="background:var(--lime);color:#000;padding:4px 10px;border-radius:999px;border:2px solid #000;font-size:.75rem;font-weight:800">haX.baby 2026 • 48hr Sprint</span>
+    <span style="background:var(--sky);color:#000;padding:4px 10px;border-radius:999px;border:2px solid #000;font-size:.75rem;font-weight:800">17-19 Oct • Public Commits</span>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:.82rem;opacity:.9">
+    <span>🎨 Art: Track 1 Asset Pack (pip_*.png)</span> • 
+    <span>🔊 Audio: Web Audio API (no external)</span> • 
+    <span>🔤 Fonts: Fredoka / VT323</span> • 
+    <span>💻 Vanilla JS</span>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px">
+    <span style="background:#ff8fa3;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">✨ Sparkle Trail +2</span>
+    <span style="background:#ffe8d6;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">📈 Odometer +1</span>
+    <span style="background:#7dd3fc;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">🔊 Click + Mute +3</span>
+    <span style="background:#d9f99d;color:#000;padding:3px 8px;border-radius:8px;font-size:.7rem;border:1px solid #000">🌀 Chaos Mode +5</span>
+  </div>
+
+  <p style="margin-top:14px;font-size:.78rem;opacity:.6;font-family:'Space Grotesk'">
+    <a href="https://github.com/Sraveena1992/pip-dream-engineer" target="_blank" style="text-decoration:underline">GitHub Repo</a> • Live on GitHub Pages • © haX.baby
+  </p>
+</footer>
+
     </main>
+
     <div class="modal-backdrop" id="characterModal">
         <div class="modal-window glass-panel">
             <button class="modal-close" id="closeModal">&times;</button>
-            <div class="modal-header"><h2>Pip's Character Sheet</h2><p>Track 1: Pip — Original by haX.baby organizers</p></div>
+            <div class="modal-header">
+                <h2>Pip's Character Sheet</h2>
+                <p>Track 1: Pip — Original by haX.baby organizers</p>
+            </div>
             <div class="modal-body" style="margin-top:14px">
                 <div class="sheet-row"><span class="sheet-key">1. Name</span><span class="sheet-val">Pip</span></div>
                 <div class="sheet-row"><span class="sheet-key">2. What they are</span><span class="sheet-val">Starry-eared Dream Engineer with moon-goggles and a pastel cloud. Born from stardust.</span></div>
@@ -171,43 +191,6 @@ Sleep now, soft as Pip's own fluff.</p><button class="action-btn playPoem" data-
         </div>
     </div>
 
-    <!-- CHAT - FIXED TOGGLE -->
-    <div id="pipChatWrap">
-        <div id="pipChatBox">
-            <div class="chatH"><span>💬 Pip is awake</span><span id="chatMin" style="cursor:pointer">✕</span></div>
-            <div class="chatM" id="chatMsgs"><div class="cmsg pip">Hi! I'm Pip 🧸 on night duty. Scared? Can't sleep? Tell me!</div></div>
-            <div style="display:flex;border-top:2px solid #000"><input id="chatInput" placeholder="Ask Pip: help me sleep..." style="flex:1;border:none;padding:10px;font-family:'Space Grotesk'"><button id="chatSend" style="border:none;background:#000;color:#fff;padding:0 14px;font-weight:700">></button></div>
-        </div>
-        <button id="pipChatToggle">🧸</button>
-    </div>
-
     <script src="script.js"></script>
-    <script>
-      // FIXES AFTER ORIGINAL SCRIPT - will not break original
-      const chatBox=document.getElementById('pipChatBox'), chatToggle=document.getElementById('pipChatToggle');
-      if(chatToggle){
-        chatToggle.onclick=()=>{ chatBox.classList.toggle('open'); chatToggle.textContent=chatBox.classList.contains('open')?'✕':'🧸'; };
-        document.getElementById('chatMin').onclick=()=>{ chatBox.classList.remove('open'); chatToggle.textContent='🧸'; };
-        const msgs=document.getElementById('chatMsgs'), inp=document.getElementById('chatInput');
-        function addMsg(t,who){ const d=document.createElement('div'); d.className='cmsg '+who; d.textContent=t; msgs.appendChild(d); msgs.scrollTop=9999; }
-        function pipReply(q){ q=q.toLowerCase(); if(q.includes('scared')||q.includes('fear')) return "Hold my paw 🐾 Breathe in-2-3, out-2-3-4. Lantern on!"; if(q.includes('sleep')) return "Try Starlit Attic poem + chime. Close eyes, I hum."; if(q.includes('lullaby')) return "4 lullabies below, press ▶!"; if(q.includes('hi')) return "Hii! Pip here 🌙 Tell me?"; return "Soft tunes for starlit naps 🌙 Say: scared, sleep, lullaby"; }
-        document.getElementById('chatSend').onclick=()=>{ if(!inp.value.trim()) return; addMsg(inp.value,'you'); const r=pipReply(inp.value); setTimeout(()=>addMsg(r,'pip'),400); inp.value=''; };
-        inp.addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('chatSend').click(); });
-      }
-      // POEM + GAME - fixed audio context
-      let audioCtx=null;
-      function playNote(freq){ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.frequency.value=freq; o.type='sine'; o.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(0.3,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+1.2); o.start(); o.stop(audioCtx.currentTime+1.2); }
-      document.querySelectorAll('.playPoem').forEach(b=>{ b.onclick=()=>{ playNote(parseFloat(b.dataset.note)); const t=b.textContent; b.textContent='♪ Playing...'; setTimeout(()=>b.textContent=t,1200); } });
-      let score=0,time=30,timer=null,spawner=null;
-      const canvas=document.getElementById('gameBox'), sEl=document.getElementById('gameScore'), tEl=document.getElementById('gameTime');
-      const startBtn=document.getElementById('startGame');
-      if(startBtn){
-        startBtn.onclick=()=>{
-          score=0;time=30;sEl.textContent=0;tEl.textContent=30;canvas.innerHTML=''; clearInterval(timer); clearInterval(spawner);
-          timer=setInterval(()=>{ time--; tEl.textContent=time; if(time<=0){ clearInterval(timer); clearInterval(spawner); canvas.innerHTML='<div style="padding:70px;text-align:center;color:#fff"><b>Done!</b> You delivered '+score+' dreams! ✨</div>'; } },1000);
-          spawner=setInterval(()=>{ if(time<=0)return; const star=document.createElement('div'); star.className='star-dot'; star.style.left=Math.random()*90+'%'; star.style.top=Math.random()*80+'%'; star.onclick=()=>{ score++; sEl.textContent=score; star.remove(); if(window.updateOdometer) window.updateOdometer(1); }; canvas.appendChild(star); setTimeout(()=>star.remove(),1200); },600);
-        };
-      }
-    </script>
 </body>
 </html>
