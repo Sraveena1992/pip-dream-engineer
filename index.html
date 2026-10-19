@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=VT323&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
     <style>
-      /* QUICK UPGRADE STYLES */
       .poem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:14px}
       .poem-card{padding:12px;border-radius:14px;background:#fff8;border:2px solid #000}
       .poem-card h4{margin:0 0 6px 0;font-family:'Fredoka'}
       .poem-card p{font-size:.85rem;white-space:pre-line;opacity:.85}
-      #pipChatWrap{position:fixed;bottom:18px;right:18px;width:300px;z-index:9999}
-      #pipChatBox{height:360px;display:flex;flex-direction:column;background:#fffefb;border:3px solid #000;border-radius:18px;overflow:hidden;box-shadow:8px 8px 0 #000}
+      #pipChatWrap{position:fixed;bottom:18px;right:18px;width:320px;z-index:9999}
+      #pipChatToggle{width:62px;height:62px;border-radius:50%;border:3px solid #000;background:#ff8fa3;box-shadow:4px 4px 0 #000;font-size:28px;cursor:pointer;position:absolute;bottom:0;right:0;transition:.2s}
+      #pipChatToggle:hover{transform:scale(1.1) rotate(5deg)}
+      #pipChatBox{height:380px;display:none;flex-direction:column;background:#fffefb;border:3px solid #000;border-radius:18px;overflow:hidden;box-shadow:8px 8px 0 #000;margin-bottom:70px}
+      #pipChatBox.open{display:flex}
       .chat-head{background:#ff8fa3;padding:8px 12px;font-family:'VT323';font-size:1.2rem;display:flex;justify-content:space-between;border-bottom:2px solid #000}
       .chat-msgs{flex:1;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:8px;font-size:.85rem}
       .msg{padding:6px 10px;border-radius:12px;max-width:80%}
@@ -30,7 +32,6 @@
     <div class="progress-bar" style="position:fixed;top:0;left:0;height:4px;background:#ff8fa3;z-index:999;width:0%;transition:.1s"></div>
     <canvas id="starfieldCanvas"></canvas>
     <canvas id="sparkleCanvas"></canvas>
-
     <nav class="hud-nav">
         <div class="hud-badge"><span class="pulse-dot"></span> LIVE NURSERY DISPATCH — PIP ON DUTY</div>
         <div class="hud-controls">
@@ -38,9 +39,7 @@
             <button id="muteBtn" class="hud-btn">🔊 Audio: ON</button>
         </div>
     </nav>
-
     <main class="nursery-wrapper">
-
         <header class="hero-card glass-panel">
             <div class="character-viewport" title="Click me 5x for secret!">
                 <img src="pip_avatar_cloud.png" alt="Pip on Cloud" class="pip-hero-img" onerror="this.src='https://i.imgur.com/8Km9tLL.png'">
@@ -53,17 +52,14 @@
                 <button id="moodBtn" class="secondary-btn">🌙 Toggle Day/Night</button>
             </div>
         </header>
-
         <section class="odometer-bar glass-panel">
             <div class="stat-item"><span class="stat-label">Dreams Delivered</span><span id="odometer" class="stat-value">01,204</span></div>
             <div class="stat-item"><span class="stat-label">Nursery Mood</span><span id="moodLabel" class="stat-value">Cozy Midnight</span></div>
             <div class="stat-item"><span class="stat-label">Active Route</span><span class="stat-value" id="routeLabel">Sector B: Attic Lofts</span></div>
         </section>
-
         <section class="section-container">
             <h2 class="section-heading"><span>01</span> The Dream Workshop</h2>
             <div class="works-grid">
-                <!-- Your existing 3 cards remain same, just shortened for space -->
                 <div class="work-card glass-panel">
                     <div class="card-media"><img src="pip_lullaby_box.png" alt="Lullaby Music Box" class="project-thumb" onerror="this.style.display='none'"></div>
                     <div class="card-header"><h3>The Lullaby Lab</h3><span style="font-size:.75rem;background:#d9f99d;color:#000;padding:2px 8px;border-radius:999px;border:1px solid #000">TIER 2 • Web Audio API</span></div>
@@ -76,17 +72,13 @@
                     </div>
                     <button class="action-btn" id="playFullLullaby">✨ Play Auto Lullaby</button>
                 </div>
-
                 <div class="work-card glass-panel">
-                    <div class="card-media lantern-media-box" id="lanternMediaBox">
-                        <img src="pip_dream_lantern.png" alt="Dream Lantern" class="project-thumb" id="lanternImg" onerror="this.style.display='none'">
-                    </div>
+                    <div class="card-media lantern-media-box" id="lanternMediaBox"><img src="pip_dream_lantern.png" alt="Dream Lantern" class="project-thumb" id="lanternImg" onerror="this.style.display='none'"></div>
                     <div class="card-header"><h3>Nightlight Collection</h3></div>
                     <p>Hand-poured bedside lanterns. Adjust glow & hue to eliminate scary shadows.</p>
                     <input type="range" id="glowSlider" min="20" max="100" value="80">
                     <button class="action-btn" id="cycleLanternColor">🎨 Switch Lantern Color</button>
                 </div>
-
                 <div class="work-card glass-panel">
                     <div class="card-media">
                         <div class="map-container" style="width:100%">
@@ -103,8 +95,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- NEW 02: POEMS + SONGS -->
         <section class="section-container">
             <h2 class="section-heading"><span>02</span> Lullaby Poems & Songs — New!</h2>
             <div class="glass-panel" style="padding:16px">
@@ -125,8 +115,6 @@ Sleep now, soft as Pip's own fluff.</p><button class="action-btn playPoem" data-
                 </div>
             </div>
         </section>
-
-        <!-- NEW 03: GAME -->
         <section class="section-container">
             <h2 class="section-heading"><span>03</span> Mini-Game: Catch Pip's Dreams</h2>
             <div class="glass-panel" style="padding:16px">
@@ -135,73 +123,44 @@ Sleep now, soft as Pip's own fluff.</p><button class="action-btn playPoem" data-
                 <p style="margin-top:8px;font-size:.8rem;opacity:.7">Tip: Each star = +1 Dream delivered to odometer!</p>
             </div>
         </section>
-
         <section class="section-container">
-            <h2 class="section-heading"><span>04</span> Pip's Journey — Scroll to Reveal</h2>
-            <div class="story-box glass-panel"><div class="story-content"><p><b>Origin:</b> Hatched from a floating stardust cocoon.</p><p><b>Mission:</b> Eliminate night terrors with music boxes & lanterns.</p><p><b>Today:</b> 2:17 AM shift, rooftops, dreams ticking. ✨</p></div></div>
+            <h2 class="section-heading"><span>04</span> Pip's Journey</h2>
+            <div class="story-box glass-panel"><div class="story-content"><p><b>Origin:</b> Hatched from stardust cocoon.</p><p><b>Mission:</b> Eliminate night terrors.</p><p><b>Today:</b> 2:17 AM shift, rooftops. ✨</p></div></div>
         </section>
-
-        <footer class="footer-credits glass-panel" style="padding:22px 18px;text-align:center">
-            <p>🎨 Track 1 Asset Pack • 🔊 Web Audio API • 💻 Vanilla JS • © haX.baby</p>
-        </footer>
+        <footer class="footer-credits glass-panel" style="padding:22px 18px;text-align:center"><p>🎨 Track 1 • 🔊 Web Audio API • 💻 Vanilla JS • © haX.baby</p></footer>
     </main>
 
-    <!-- PIP CHAT WIDGET -->
     <div id="pipChatWrap">
         <div id="pipChatBox">
-            <div class="chat-head"><span>💬 Pip is awake</span><span id="chatMin">—</span></div>
-            <div class="chat-msgs" id="chatMsgs">
-                <div class="msg pip">Hi! I'm Pip 🧸 on night duty. Scared? Can't sleep? Tell me!</div>
-            </div>
+            <div class="chat-head"><span>💬 Pip is awake</span><span id="chatMin" style="cursor:pointer">✕</span></div>
+            <div class="chat-msgs" id="chatMsgs"><div class="msg pip">Hi! I'm Pip 🧸 on night duty. Scared? Can't sleep? Tell me!</div></div>
             <div class="chat-input"><input id="chatInput" placeholder="Ask Pip: help me sleep..."/><button id="chatSend" style="border:none;background:#000;color:#fff;padding:0 14px;font-weight:700">></button></div>
         </div>
+        <button id="pipChatToggle">🧸</button>
     </div>
 
     <div class="modal-backdrop" id="characterModal"><div class="modal-window glass-panel"><button class="modal-close" id="closeModal">&times;</button><h2>Pip's Character Sheet</h2><p>Junior Dream Engineer</p></div></div>
 
     <script src="script.js"></script>
     <script>
-      // CHAT LOGIC
+      const chatBox=document.getElementById('pipChatBox'), chatToggle=document.getElementById('pipChatToggle');
+      chatToggle.onclick=()=>{chatBox.classList.toggle('open'); chatToggle.textContent=chatBox.classList.contains('open')?'✕':'🧸';}
+      document.getElementById('chatMin').onclick=()=>{chatBox.classList.remove('open'); chatToggle.textContent='🧸';}
       const msgs=document.getElementById('chatMsgs'), inp=document.getElementById('chatInput');
       function addMsg(t,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=9999;}
-      function pipReply(q){
-        q=q.toLowerCase();
-        if(q.includes('scared')||q.includes('fear')) return "Hold my paw 🐾 Let's breathe: in-2-3, out-2-3-4. I turned on lantern for you, shadow gone!";
-        if(q.includes('sleep')||q.includes('insomnia')) return "Try my Starlit Attic poem + C4-E4-G4 chime. Close eyes, I will hum till you drift.";
-        if(q.includes('game')) return "Play Catch the Dreams! Every star you catch, I deliver one dream. Go try!";
-        if(q.includes('lullaby')||q.includes('song')) return "I have 4 lullabies! Scroll to Poems section and press ▶. Which one you like?";
-        if(q.includes('who')||q.includes('what are you')) return "I'm Pip, hatched from stardust, work 2:17 AM shift fixing nightmares with lanterns.";
-        return "Soft tunes for deep, starlit naps 🌙✨ Tell me more? Say 'scared', 'sleep', 'lullaby'";
-      }
-      document.getElementById('chatSend').onclick=()=>{if(!inp.value) return;addMsg(inp.value,'you');const r=pipReply(inp.value);setTimeout(()=>addMsg(r,'pip'),400);inp.value=''; document.getElementById('odometer').textContent=(parseInt(document.getElementById('odometer').textContent.replace(',',''))+1).toString().padStart(2,'0');}
+      function pipReply(q){q=q.toLowerCase(); if(q.includes('scared')||q.includes('fear')) return "Hold my paw 🐾 Breathe in-2-3, out-2-3-4. Lantern on!"; if(q.includes('sleep')) return "Try Starlit Attic poem + chime. Close eyes, I hum."; if(q.includes('lullaby')||q.includes('song')) return "4 lullabies below, press ▶!"; if(q.includes('hi')||q.includes('hello')) return "Hii! Pip here 🌙 Tell me?"; return "Soft tunes for starlit naps 🌙 Say: scared, sleep, lullaby"; }
+      document.getElementById('chatSend').onclick=()=>{ if(!inp.value) return; addMsg(inp.value,'you'); const r=pipReply(inp.value); setTimeout(()=>addMsg(r,'pip'),400); inp.value=''; const odo=document.getElementById('odometer'); if(odo) odo.textContent=(parseInt(odo.textContent.replace(',',''))+1).toString(); }
       inp.addEventListener('keydown',e=>{if(e.key==='Enter') document.getElementById('chatSend').click()});
-
-      // GAME LOGIC
-      let score=0,time=30,timer=null;
+      let audioCtx=null;
+      function playNote(freq){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.frequency.value=freq; o.type='sine'; o.connect(g); g.connect(audioCtx.destination); g.gain.setValueAtTime(0.3,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+1.2); o.start(); o.stop(audioCtx.currentTime+1.2); }
+      document.querySelectorAll('.playPoem').forEach(b=>{ b.onclick=()=>{ const note=parseFloat(b.dataset.note); playNote(note); try{ if(window.playTone) window.playTone(note);}catch(e){} b.textContent='♪ Playing...'; setTimeout(()=>b.textContent='▶ Play',1200); } });
+      let score=0,time=30,timer=null,spawner=null;
       const canvas=document.getElementById('gameCanvas'), sEl=document.getElementById('gameScore'), tEl=document.getElementById('gameTime');
       document.getElementById('startGame').onclick=()=>{
-        score=0;time=30;sEl.textContent=0;tEl.textContent=30;canvas.innerHTML='';
-        clearInterval(timer);
-        timer=setInterval(()=>{
-          time--;tEl.textContent=time;
-          if(time<=0){clearInterval(timer);clearInterval(spawner);canvas.innerHTML='<div style="padding:70px;text-align:center"><b>Done!</b> You delivered '+score+' dreams! ✨</div>';}
-        },1000);
-        const spawner=setInterval(()=>{
-          if(time<=0){clearInterval(spawner);return;}
-          const star=document.createElement('div');star.className='star-dot';star.style.left=Math.random()*90+'%';star.style.top=Math.random()*80+'%';
-          star.onclick=()=>{score++;sEl.textContent=score;star.remove();if(window.incrementOdometer) incrementOdometer();}
-          canvas.appendChild(star);setTimeout(()=>star.remove(),1200);
-        },600);
+        score=0;time=30;sEl.textContent=0;tEl.textContent=30;canvas.innerHTML=''; clearInterval(timer); clearInterval(spawner);
+        timer=setInterval(()=>{ time--; tEl.textContent=time; if(time<=0){ clearInterval(timer); clearInterval(spawner); canvas.innerHTML='<div style="padding:70px;text-align:center"><b>Done!</b> You delivered '+score+' dreams! ✨</div>'; } },1000);
+        spawner=setInterval(()=>{ if(time<=0){clearInterval(spawner);return;} const star=document.createElement('div'); star.className='star-dot'; star.style.left=Math.random()*90+'%'; star.style.top=Math.random()*80+'%'; star.onclick=()=>{ score++; sEl.textContent=score; star.remove(); }; canvas.appendChild(star); setTimeout(()=>star.remove(),1200); },600);
       };
-
-      // POEM PLAY using existing Web Audio
-      document.querySelectorAll('.playPoem').forEach(b=>{
-        b.onclick=()=>{
-          const note=parseFloat(b.dataset.note);
-          if(window.playTone) window.playTone(note);
-          b.textContent='♪ Playing...';setTimeout(()=>b.textContent='▶ Play',1000);
-        }
-      });
     </script>
 </body>
 </html>
